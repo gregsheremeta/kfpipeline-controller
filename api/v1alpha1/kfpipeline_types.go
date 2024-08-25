@@ -23,13 +23,22 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// KFPipelineSpec defines the desired state of KFPipeline
+// KFPipelineSpec defines the Kubeflow Pipeline.
 type KFPipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of KFPipeline. Edit kfpipeline_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Pipeline name. This is required to be unique within the pipeline server. If the pipeline
+	// spec changes, the pipeline name will be used to identify the pipeline to update, and a new
+	// pipeline version will be created.
+	// +kubebuilder:validation:Required
+	Name string `json:"name"`
+
+	Description string `json:"description,omitempty"`
+
+	// The Kubeflow Pipelines PipelineSpec yaml (also sometimes referred to as Pipeline IR).
+	// +kubebuilder:validation:Required
+	PipelineSpec string `json:"pipelineSpec"`
 }
 
 // KFPipelineStatus defines the observed state of KFPipeline
