@@ -3,7 +3,6 @@ kind: RoleBinding
 metadata:
   labels:
     app.kubernetes.io/name: kfpipeline-controller
-    app.kubernetes.io/managed-by: kustomize
   name: leader-election-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -11,5 +10,5 @@ roleRef:
   name: leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: controller-manager
-  namespace: system
+  name: kfpipeline-controller-manager
+  namespace: kfpipeline-controller

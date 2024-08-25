@@ -6,13 +6,12 @@ kind: NetworkPolicy
 metadata:
   labels:
     app.kubernetes.io/name: kfpipeline-controller
-    app.kubernetes.io/managed-by: kustomize
   name: allow-metrics-traffic
-  namespace: system
+  namespace: kfpipeline-controller
 spec:
   podSelector:
     matchLabels:
-      control-plane: controller-manager
+      app.kubernetes.io/name: kfpipeline-controller
   policyTypes:
     - Ingress
   ingress:

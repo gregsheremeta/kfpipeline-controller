@@ -18,6 +18,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -33,9 +34,9 @@ type KFPipelineReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// +kubebuilder:rbac:groups=kfpipeline-controller.opendatahub.org,resources=kfpipelines,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=kfpipeline-controller.opendatahub.org,resources=kfpipelines/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=kfpipeline-controller.opendatahub.org,resources=kfpipelines/finalizers,verbs=update
+// +kubebuilder:rbac:groups=kfpipeline-controller.opendatahub.org,namespace=kfpipeline-controller,resources=kfpipelines,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=kfpipeline-controller.opendatahub.org,namespace=kfpipeline-controller,resources=kfpipelines/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=kfpipeline-controller.opendatahub.org,namespace=kfpipeline-controller,resources=kfpipelines/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -49,7 +50,7 @@ type KFPipelineReconciler struct {
 func (r *KFPipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	fmt.Printf("Reconciling KFPipeline %s in namespace %s\n", req.Name, req.Namespace)
 
 	return ctrl.Result{}, nil
 }

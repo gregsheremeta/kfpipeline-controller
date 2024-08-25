@@ -1,10 +1,9 @@
 # permissions for end users to edit kfpipelines.
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   labels:
     app.kubernetes.io/name: kfpipeline-controller
-    app.kubernetes.io/managed-by: kustomize
   name: kfpipeline-editor-role
 rules:
 - apiGroups:

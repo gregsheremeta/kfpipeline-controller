@@ -3,7 +3,6 @@ kind: KFPipeline
 metadata:
   labels:
     app.kubernetes.io/name: kfpipeline-controller
-    app.kubernetes.io/managed-by: kustomize
   name: kfpipeline-sample
 spec:
   # TODO(user): Add fields here
