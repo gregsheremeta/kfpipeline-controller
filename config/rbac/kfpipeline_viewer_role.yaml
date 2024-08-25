@@ -1,0 +1,23 @@
+# permissions for end users to view kfpipelines.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: kfpipeline-controller
+    app.kubernetes.io/managed-by: kustomize
+  name: kfpipeline-viewer-role
+rules:
+- apiGroups:
+  - kfpipeline-controller.opendatahub.org
+  resources:
+  - kfpipelines
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - kfpipeline-controller.opendatahub.org
+  resources:
+  - kfpipelines/status
+  verbs:
+  - get

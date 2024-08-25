@@ -1,0 +1,9 @@
+apiVersion: kfpipeline-controller.opendatahub.org/v1alpha1
+kind: KFPipeline
+metadata:
+  labels:
+    app.kubernetes.io/name: kfpipeline-controller
+    app.kubernetes.io/managed-by: kustomize
+  name: kfpipeline-sample
+spec:
+  # TODO(user): Add fields here
