@@ -28,12 +28,6 @@ type KFPipelineSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Pipeline name. This is required to be unique within the pipeline server. If the pipeline
-	// spec changes, the pipeline name will be used to identify the pipeline to update, and a new
-	// pipeline version will be created.
-	// +kubebuilder:validation:Required
-	Name string `json:"name"`
-
 	Description string `json:"description,omitempty"`
 
 	// The Kubeflow Pipelines PipelineSpec yaml (also sometimes referred to as Pipeline IR).
