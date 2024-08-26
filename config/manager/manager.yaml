@@ -16,6 +16,7 @@ spec:
         kubectl.kubernetes.io/default-container: manager
       labels:
         app.kubernetes.io/name: kfpipeline-controller
+        pipelines.kubeflow.org/v2_component: 'true'
     spec:
       securityContext:
         runAsNonRoot: true

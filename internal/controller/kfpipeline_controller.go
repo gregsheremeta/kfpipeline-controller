@@ -24,8 +24,9 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	kfpipelinecontrollerv1alpha1 "github.com/gregsheremeta/kfpipeline-controller/api/v1alpha1"
+	kfpcv1alpha1 "github.com/gregsheremeta/kfpipeline-controller/api/v1alpha1"
 )
 
 // KFPipelineReconciler reconciles a KFPipeline object
@@ -52,12 +53,28 @@ func (r *KFPipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 
 	fmt.Printf("Reconciling KFPipeline %s in namespace %s\n", req.Name, req.Namespace)
 
+	logger := log.FromContext(ctx)
+
+	kfPipeline := &kfpcv1alpha1.KFPipeline{}
+	err := r.Get(ctx, req.NamespacedName, kfPipeline)
+	if err != nil {
+		if client.IgnoreNotFound(err) != nil {
+			logger.Error(err, "failed to get KFPipeline")
+			return reconcile.Result{}, err
+		}
+		return reconcile.Result{}, nil
+	}
+
+	fmt.Println("found it. Syncing it.")
+	SyncPipeline(req.Name, req.Namespace, kfPipeline)
+	fmt.Println("done syncing.")
+
 	return ctrl.Result{}, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *KFPipelineReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&kfpipelinecontrollerv1alpha1.KFPipeline{}).
+		For(&kfpcv1alpha1.KFPipeline{}).
 		Complete(r)
 }
