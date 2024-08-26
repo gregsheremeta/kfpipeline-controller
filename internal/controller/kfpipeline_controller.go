@@ -19,6 +19,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -66,9 +67,14 @@ func (r *KFPipelineReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	}
 
 	fmt.Println("found it. Syncing it.")
-	SyncPipeline(req.Name, req.Namespace, kfPipeline)
-	fmt.Println("done syncing.")
+	err = SyncPipeline(req.Name, req.Namespace, kfPipeline)
+	if err != nil {
+		logger.Info(fmt.Sprintf("failed to sync KFPipeline: %v", err))
+		logger.Info("TODO set a status on the KFPipeline CR to indicate the error")
+		return ctrl.Result{RequeueAfter: time.Minute}, nil
+	}
 
+	fmt.Println("successfully synced.")
 	return ctrl.Result{}, nil
 }
 
